@@ -8,8 +8,13 @@ function Login() {
   }
   const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
 
+  const onSubmitClick = (e) => {
+    e.preventDefault()
+    
+  }
+
   return (
-    <form onSubmit>
+    <form onSubmit={ onSubmitClick }>
       <label htmlFor="emailInput">
         Email:
         <input
@@ -30,6 +35,8 @@ function Login() {
           value={genericState.passwordInput}
         />
       </label>
+
+      <button type="submit">Log In</button>
     </form>
   )
 }
