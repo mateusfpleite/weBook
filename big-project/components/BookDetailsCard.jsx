@@ -12,6 +12,7 @@ function BookDetailsCard({ book }) {
     description,
     imageLinks: { thumbnail },
   } = book.volumeInfo;
+
   return (
     <div>
       <h1>{title}</h1>
