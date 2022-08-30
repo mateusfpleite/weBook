@@ -1,7 +1,9 @@
 import useGenericState from "../../hooks/useGenericState";
-import Button from '@mui/material/Button';
+import { useRouter } from 'next/router';
 
 function Login() {
+  const router = useRouter();
+
   const INITIAL_STATE = {
     emailInput: '',
     passwordInput: '',
@@ -10,9 +12,8 @@ function Login() {
 
   const onSubmitClick = (e) => {
     e.preventDefault()
-    
+    router.push('/home')
   }
-
   return (
     <form onSubmit={ onSubmitClick }>
       <label htmlFor="emailInput">
