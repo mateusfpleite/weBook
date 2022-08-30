@@ -1,6 +1,10 @@
+import Link from 'next/link';
+
 function BookCard({ book }) {
-    const {volumeInfo} = book;
+    const {volumeInfo, id} = book;
   return (
+    <Link href={`/book/${id}`}> 
+    <a>
       <figure>
         <img
           src={
@@ -13,6 +17,8 @@ function BookCard({ book }) {
           ', '
         )}`}</figcaption>
       </figure>
+      </a>
+      </Link>
   );
 }
 
