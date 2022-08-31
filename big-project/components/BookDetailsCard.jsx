@@ -12,7 +12,7 @@ function BookDetailsCard({ book }) {
     publisher,
     language,
     description,
-    imageLinks: { thumbnail },
+    imageLinks,
   } = book.volumeInfo;
 
   return (
@@ -21,15 +21,18 @@ function BookDetailsCard({ book }) {
       <h3>{subTitle}</h3>
       <h3>Authors: {authors.join(', ')}</h3>
       <h3>Language: {isoConv(language)}</h3>
-      <img src={thumbnail} alt="" />
+      <img 
+      style={{ maxWidth: '128px', height: '170px' }}
+      src={imageLinks?.thumbnail || 'https://tinyurl.com/36ys7v4w'}
+       alt="" />
       <div>
         { description ? <p>{description}</p> : <p>No description avaliable</p> }
         <p>Number of pages: {pageCount}</p>
         <p>Published: {publishedDate}</p>
         <p>Publisher: {publisher}</p>
       </div>
-      <a href={previewLink}>Preview Link</a>
-      <a href={canonicalVolumeLink}>Leia online!</a>
+      <p><a href={previewLink}>Google Books Preview</a></p>
+      <a href={canonicalVolumeLink}>Buy it on Playstore!</a>
     </div>
   )
 }

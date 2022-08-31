@@ -27,10 +27,14 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
   const URL = `https://www.googleapis.com/books/v1/volumes/${params.bookId}`;
-  const { data }= await axios.get(URL);
+  let data = null;
+  try {
+    data = (await axios.get(URL)).data;
+  } catch (err) { };
+
   return {
     props: {
-      data
-    }
-  }
+      data,
+    },
+  };
 }
