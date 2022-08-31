@@ -1,3 +1,5 @@
+import isoConv from 'iso-language-converter';
+
 function BookDetailsCard({ book }) {
   const {
     pageCount,
@@ -18,7 +20,7 @@ function BookDetailsCard({ book }) {
       <h1>{title}</h1>
       <h3>{subTitle}</h3>
       <h3>Authors: {authors.join(', ')}</h3>
-      <h3>Language: {language}</h3>
+      <h3>Language: {isoConv(language)}</h3>
       <img src={thumbnail} alt="" />
       <div>
         { description ? <p>{description}</p> : <p>No description avaliable</p> }
