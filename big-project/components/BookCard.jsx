@@ -3,7 +3,7 @@ import Link from 'next/link';
 function BookCard({ book }) {
     const {volumeInfo, id} = book;
   return (
-    <Link href={`/book/${id}`}> 
+    <Link href={`/books/${id}`}> 
     <a>
       <figure>
         <img

@@ -17,7 +17,7 @@ function SearchBar() {
   const searchBarRequest = async (event) => {
     const { target } = event;
     setGenericState(event)
-    setSearchBarData(await searchBarFetch(target.value) || []);
+    setSearchBarData(await searchBarFetch(target.value, true) || []);
   };
 
   return (
@@ -39,7 +39,7 @@ function SearchBar() {
                     query={genericState.searchBar}
                   />
                 ))}
-                <Link href={`/book/allVolumes/${genericState.searchBar}`}>See all!</Link>
+                <Link href={`/books/allVolumes/${genericState.searchBar}`}>See all!</Link>
               </>
             )
             : 'No results found'

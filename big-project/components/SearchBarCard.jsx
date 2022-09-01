@@ -4,7 +4,7 @@ function SearchBarCard({ id, volumeInfo }, query) {
   console.log(query)
   return (
     <>
-      <Link href={`/book/${id}`} key={id}>
+      <Link href={`/books/${id}`} key={id}>
         <a>
           <div style={{ position: 'relative', backgroundColor: 'white', border: '1px solid black' }}>
             <img
