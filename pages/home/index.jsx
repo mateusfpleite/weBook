@@ -7,11 +7,7 @@ function Home({ books }) {
     <>
       <h1>You are in the home page!</h1>
       <SearchBar />
-      {books.map((book) => (
-        <div key={book.id}>
-          <BookCard book={book} />
-        </div>
-      ))}
+      
     </>
   )
 }

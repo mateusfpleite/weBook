@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 function SearchBarCard({ id, volumeInfo }, query) {
-  console.log(query)
   return (
     <>
       <Link href={`/books/${id}`} key={id}>
