@@ -1,25 +1,12 @@
 import axios from 'axios';
-import useGenericState from '../../../hooks/useGenericState';
 import BookCard from '../../components/BookCard';
+import SearchBar from '../../components/SearchBar';
 
 function Home({ books }) {
-  const INITIAL_STATE = { searchBar: '' };
-  const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
   return (
     <>
       <h1>You are in the home page!</h1>
-      <header>
-        <label htmlFor="searchBar">
-          <input
-            placeholder="Type to search..."
-            type="text"
-            id="searchBar"
-            name="searchBar"
-            value={genericState.searchBar}
-            onChange={setGenericState}
-          />
-        </label>
-      </header>
+      <SearchBar />
       {books.map((book) => (
         <div key={book.id}>
           <BookCard book={book} />

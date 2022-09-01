@@ -1,5 +1,5 @@
-import useGenericState from "../../hooks/useGenericState";
 import { useRouter } from 'next/router';
+import useGenericState from '../hooks/useGenericState';
 
 function Login() {
   const router = useRouter();
