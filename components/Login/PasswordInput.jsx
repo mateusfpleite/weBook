@@ -40,10 +40,18 @@ function PasswordInput() {
       </label>
       <p>Your password must contain at least:</p>
       <ul>
-        <li style={ { color: verifyLowerCase(passwordInput) ? 'red' : 'green' } }>3 lower case character</li>
-        <li style={ { color: verifyUpperCase(passwordInput) ? 'red' : 'green'} }>1 upper case character</li>
-        <li style={ { color: verifySpecial(passwordInput) ? 'red' : 'green'} }>1 special character</li>
-        <li style={ { color: verifyPassLength(passwordInput) ? 'red' : 'green'} }>8-16 characters</li>
+        <li style={ { color: verifyLowerCase(passwordInput) ? 'red' : 'green' } }>
+          3 lower case characters
+        </li>
+        <li style={ { color: verifyUpperCase(passwordInput) ? 'red' : 'green'} }>
+          1 upper case character
+        </li>
+        <li style={ { color: verifySpecial(passwordInput) ? 'red' : 'green'} }>
+          1 special character
+        </li>
+        <li style={ { color: verifyPassLength(passwordInput) ? 'red' : 'green'} }>
+          8-16 characters
+        </li>
       </ul>
     </>
   )
