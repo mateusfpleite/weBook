@@ -1,11 +1,11 @@
-import Context from '../context/Context';
+import ContextProvider from '../context/ContextProvider';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Context.Provider value={ 'olá' }>
+    <ContextProvider>
       <Component {...pageProps} />
-    </Context.Provider>
+    </ContextProvider>
   );
 }
 

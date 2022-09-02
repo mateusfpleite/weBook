@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router';
 import useGenericState from '../hooks/useGenericState';
 import SignInButton from '../components/SignInButton';
+import { useContext } from 'react';
+import context from '../context/context';
 
 function Login() {
   const router = useRouter();
 
-  const INITIAL_STATE = {
-    emailInput: '',
-    passwordInput: '',
-  }
-  const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
+  const { genericState, setGenericState } = useContext(context);
+
+  console.log(genericState)
 
   const onSubmitClick = (e) => {
     e.preventDefault()
     router.push('/home')
   }
-
 
   return (
     <form onSubmit={onSubmitClick}>
