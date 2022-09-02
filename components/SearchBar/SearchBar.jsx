@@ -1,12 +1,12 @@
-import useGenericState from '../hooks/useGenericState';
-import searchBarFetch from '../utils/searchBarFetch';
+import useGenericState from '../../hooks/useGenericState';
+import searchBarFetch from '../../utils/searchBarFetch';
 import { useState } from 'react';
 import SearchBarCard from './SearchBarCard';
 import Link from 'next/link';
 import SearchBarOptions from './SearchBarOptions';
 
 function SearchBar() {
-  const INITIAL_STATE = { searchBar: '' };
+  const INITIAL_STATE = { searchBar: '', language: false };
   const [genericState, setGenericState] = useGenericState(INITIAL_STATE);
   const [searchBarData, setSearchBarData] = useState([]);
 
@@ -18,7 +18,7 @@ function SearchBar() {
   const searchBarRequest = async (event) => {
     const { target } = event;
     setGenericState(event)
-    setSearchBarData(await searchBarFetch(target.value, true) || []);
+    setSearchBarData(await searchBarFetch(target.value, true, genericState.language) || []);
   };
 
   return (
@@ -48,7 +48,7 @@ function SearchBar() {
           }
         </div>
       }
-      <SearchBarOptions />
+      <SearchBarOptions genericState={genericState} setGenericState={setGenericState} />
 
     </>
   )

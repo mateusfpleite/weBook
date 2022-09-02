@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import BookCard from '../../../components/BookCard';
+import BookCard from '../../../components/BookCard/BookCard';
 import searchBarFetch from "../../../utils/searchBarFetch";
 
 function AllVolumes({ data }) {
