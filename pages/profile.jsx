@@ -6,13 +6,27 @@ function Profile() {
   const [ willChangePic, setWillChangePic ] = useState(false);
   const picture = profilePic || "https://i.imgur.com/r0t9T9j.png";
 
-  const INITIAL_STATE = {
-    profileDesc: '',
-  };
+  const INITIAL_STATE = { profileDesc: '' };
 
   const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
 
   const { profileDesc } = genericState;
+
+  const textAreaLengthColor = (desc) => {
+    if (desc.length < 50) return 'yellowgreen';
+    if (desc.length >= 50 && desc.length < 100) return 'green';
+    if (desc.length >= 100 && desc.length < 200) return 'orange';
+    if (desc.length >= 200 && desc.length < 300) return 'darkred';
+    return 'red';
+  };
+
+  const changeProfilePic = (files) => {
+      const file = files[ 0 ];
+      const profilePic = URL.createObjectURL(file);
+      setProfilePic(profilePic);
+      setWillChangePic(false);
+  }
+
   return (
     <form method="POST">
       <h1>Profile Page</h1>
@@ -35,12 +49,7 @@ function Profile() {
       {willChangePic &&
         (<input
           type="file"
-          onChange={({ target: { files } }) => {
-            const file = files[ 0 ];
-            const profilePic = URL.createObjectURL(file);
-            setProfilePic(profilePic);
-            setWillChangePic(false);
-          }}
+          onChange={({ target: { files } }) => changeProfilePic(files)}
         />)
       }
       <fieldset>
@@ -53,48 +62,14 @@ function Profile() {
           value={profileDesc}
           onChange={setGenericState}
         />
-        <p>{`${profileDesc.length}/400`}</p>
+        <p
+        style={ { color: textAreaLengthColor(profileDesc), transition: '1s' } }
+        >
+          {`${profileDesc.length}/400`}
+          </p>
       </fieldset>
     </form>
   );
 }
 
 export default Profile;
-
-// const ImageUpload = () => {
-//   const [selectedFile, setSelectedFile] = useState()
-//   const [preview, setPreview] = useState()
-
-//   // create a preview as a side effect, whenever selected file is changed
-//   useEffect(() => {
-//       if (!selectedFile) {
-//           setPreview(undefined)
-//           return
-//       }
-
-//       const objectUrl = URL.createObjectURL(selectedFile)
-//       setPreview(objectUrl)
-
-//       // free memory when ever this component is unmounted
-//       return () => URL.revokeObjectURL(objectUrl)
-//   }, [selectedFile])
-
-//   const onSelectFile = e => {
-//       if (!e.target.files || e.target.files.length === 0) {
-//           setSelectedFile(undefined)
-//           return
-//       }
-
-//       // I've kept this example simple by using the first image instead of multiple
-//       setSelectedFile(e.target.files[0])
-//   }
-
-//   return (
-//       <div>
-//           <input type='file' onChange={onSelectFile} />
-//           {selectedFile &&  <img src={preview} /> }
-//       </div>
-//   )
-// }
-
-// export default ImageUpload;
