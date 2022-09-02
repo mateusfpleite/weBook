@@ -1,6 +1,6 @@
 import axios from "axios";
-import BookDetailsCard from "../../components/BookDetailsCard";
 import { useRouter } from 'next/router';
+import BookDetailsCard from '../../components/BookCard/BookDetailsCard';
 
 function BookDetails({ data }) {
   const router = useRouter();
