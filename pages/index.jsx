@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import useGenericState from '../hooks/useGenericState';
+import SignInButton from '../components/SignInButton';
 
 function Login() {
   const router = useRouter();
@@ -15,11 +16,6 @@ function Login() {
     router.push('/home')
   }
 
-  const verifyEmailAndPassword = (email, password) => {
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-    const passwordRegex = /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[a-z].*[a-z].*[a-z]).{8,16}$/;
-    return !(emailRegex.test(email)) || !(passwordRegex.test(password));
-  };
 
   return (
     <form onSubmit={onSubmitClick}>
@@ -43,12 +39,7 @@ function Login() {
           value={genericState.passwordInput}
         />
       </label>
-      <button
-        type="submit"
-        disabled={verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)}
-      >
-        Sign In
-      </button>
+      {/* <SignInButton /> */}
     </form>
   )
 }

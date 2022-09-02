@@ -3,6 +3,7 @@ import searchBarFetch from '../utils/searchBarFetch';
 import { useState } from 'react';
 import SearchBarCard from './SearchBarCard';
 import Link from 'next/link';
+import SearchBarOptions from './SearchBarOptions';
 
 function SearchBar() {
   const INITIAL_STATE = { searchBar: '' };
@@ -47,6 +48,8 @@ function SearchBar() {
           }
         </div>
       }
+      <SearchBarOptions />
+
     </>
   )
 }

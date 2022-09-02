@@ -1,9 +1,13 @@
+import isoConv from 'iso-language-converter';
+
 function SearchBarOptions() {
-    const languages = ["en", "pt"]
-  return (
+    const languages = ["ar", "de", "en", "es", "fr","hi", "it", "ja", "ko", "pt", "pt-BR", "ru" ]
+  return ( 
     <div>
         <select>
-            
+            {languages.map((language) => {
+                <option>{isoConv(language)}</option>
+            })}
         </select>
     </div>
   );
