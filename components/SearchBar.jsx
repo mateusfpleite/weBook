@@ -35,6 +35,7 @@ function SearchBar() {
               <>
                 {searchBarData.map((data) => (
                   <SearchBarCard
+                    key={ data.id }
                     {...data}
                     query={genericState.searchBar}
                   />

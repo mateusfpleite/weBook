@@ -14,8 +14,15 @@ function Login() {
     e.preventDefault()
     router.push('/home')
   }
+
+  const verifyEmailAndPassword = (email, password) => {
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const passwordRegex = /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[a-z].*[a-z].*[a-z]).{8,16}$/;
+    return !(emailRegex.test(email)) || !(passwordRegex.test(password));
+  };
+
   return (
-    <form onSubmit={ onSubmitClick }>
+    <form onSubmit={onSubmitClick}>
       <label htmlFor="emailInput">
         Email:
         <input
@@ -36,8 +43,12 @@ function Login() {
           value={genericState.passwordInput}
         />
       </label>
-
-      <button type="submit">Log In</button>
+      <button
+        type="submit"
+        disabled={verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)}
+      >
+        Sign In
+      </button>
     </form>
   )
 }
