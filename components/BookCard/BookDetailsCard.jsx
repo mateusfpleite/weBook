@@ -31,8 +31,8 @@ function BookDetailsCard({ book }) {
         <p>Published: {publishedDate}</p>
         <p>Publisher: {publisher}</p>
       </div>
-      <p><a href={previewLink}>Google Books Preview</a></p>
-      <a href={canonicalVolumeLink}>Buy it on Playstore!</a>
+      <p><a href={previewLink} target="_blank">Google Books Preview</a></p>
+      <a href={canonicalVolumeLink} target="_blank">Buy it on Playstore!</a>
     </div>
   )
 }
