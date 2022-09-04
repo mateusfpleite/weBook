@@ -19,7 +19,7 @@ function BookDetailsCard({ book }) {
     <div>
       <h1>{title}</h1>
       <h3>{subTitle}</h3>
-      <h3>Authors: {authors.join(', ')}</h3>
+      <h3>Authors: {authors?.join(', ') || "No author specified"}</h3>
       <h3>Language: {isoConv(language)}</h3>
       <img 
       style={{ maxWidth: '128px', height: '170px' }}
