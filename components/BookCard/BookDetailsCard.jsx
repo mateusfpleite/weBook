@@ -14,7 +14,6 @@ function BookDetailsCard({ book }) {
     description,
     imageLinks,
   } = book.volumeInfo;
-
   return (
     <div>
       <h1>{title}</h1>
@@ -26,7 +25,7 @@ function BookDetailsCard({ book }) {
       src={imageLinks?.thumbnail || 'https://tinyurl.com/36ys7v4w'}
        alt="" />
       <div>
-        { description ? <p>{description}</p> : <p>No description avaliable</p> }
+        { description ? <p dangerouslySetInnerHTML={{__html: description }} /> : <p>No description avaliable</p> }
         <p>Number of pages: {pageCount}</p>
         <p>Published: {publishedDate}</p>
         <p>Publisher: {publisher}</p>
