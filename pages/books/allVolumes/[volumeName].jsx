@@ -4,10 +4,11 @@ import BookCard from '../../../components/BookCard/BookCard';
 import searchBarFetch from "../../../utils/searchBarFetch";
 
 function AllVolumes({ data }) {
+  if (router.isFallback) return (<h1>Loading...</h1>)
+  
   const [showFiltersList, setListItem] = useState({});
   const router = useRouter();
 
-  if (router.isFallback) return (<h1>Loading...</h1>)
   const categories = [...new Set(data.map((book) => (
     book.volumeInfo.categories?.join(', ')
   )))];
