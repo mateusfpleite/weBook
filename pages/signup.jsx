@@ -1,24 +1,21 @@
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import context from '../context/context';
-import SignInButton from '../components/Login/SignInButton';
 import PasswordInput from '../components/Login/PasswordInput';
+import SignUpFields from '../components/Login/SignUpFIelds';
 
-function SignIn() {
+function SingUp() {
   const router = useRouter();
 
   const { genericState, setGenericState } = useContext(context);
 
-  const onSubmitClick = (e) => {
-    e.preventDefault()
-    router.push('/home')
+  const signUpButton = (e) => {
+    e.preventDefault();
+    router.push('/');
   }
 
   return (
-    <form onSubmit={onSubmitClick}>
-      Wellcome to our library!
-      <br />
-      <br />
+    <form onSubmit={signUpButton}>
       <label htmlFor="emailInput">
         Email:
         <input
@@ -30,11 +27,11 @@ function SignIn() {
         />
       </label>
       <PasswordInput />
-      <SignInButton />
-        {/* button for going to signup page */}
-        <button type='button' onClick={ () => router.push('/signup') }>Sign up</button>
+      <SignUpFields passwordInput={genericState.passwordInput} />
+      {/* button for signing up, and registering user in db */}
+      <button type='submit'>Sign up</button>
     </form>
   )
 }
 
-export default SignIn;
+export default SingUp;
