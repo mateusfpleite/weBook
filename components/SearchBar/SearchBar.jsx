@@ -18,7 +18,7 @@ function SearchBar() {
   const searchBarRequest = async (event) => {
     const { target } = event;
     setGenericState(event)
-    setSearchBarData(await searchBarFetch(target.value, true, genericState.language) || []);
+    setSearchBarData(await searchBarFetch({value: target.value, language: genericState.language, maxResults: 5}) || []);
   };
 
   return (
