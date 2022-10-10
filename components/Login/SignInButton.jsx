@@ -2,7 +2,7 @@ import { useContext } from "react";
 import context from "../../context/context";
 
 function SignInButton() {
- const { genericState } = useContext(context);
+  const { genericState } = useContext(context);
 
   const verifyEmailAndPassword = (email, password) => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -11,11 +11,11 @@ function SignInButton() {
   };
   return (
     <button
-    type="submit"
-    disabled={verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)}
-  >
-    Sign In
-  </button>
+      type="submit"
+      disabled={verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)}
+    >
+      Sign In
+    </button>
   )
 }
 

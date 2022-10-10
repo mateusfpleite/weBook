@@ -15,8 +15,7 @@ function Home() {
     autoLoad={true}
     fields="name,email,picture"
     callback={responseFacebook}
-   />,
-      
+   />
     </>
   )
 }
