@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   WantToRead.associate = (models) => {
-    WantToRead.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-    WantToRead.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+    WantToRead.belongsToMany(models.User, { foreignKey: 'userId', as: 'user' });
+    WantToRead.belongsToMany(models.Books, { foreignKey: 'bookId', as: 'books' });
   };
   return WantToRead;
 };
