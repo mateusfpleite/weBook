@@ -11,14 +11,18 @@ module.exports = {
       },
       bookId: {
         type: Sequelize.STRING,
-        field: 'book_id'
+        field: 'book_id',
+        allowNull: false,
       },
       title: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
       bookPicture: {
         type: Sequelize.STRING,
-        field: 'book_picture'
+        field: 'book_picture',
+        allowNull: true,
+        defaultValue: null,
       },
     });
   },
