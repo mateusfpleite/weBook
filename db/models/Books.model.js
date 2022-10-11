@@ -27,6 +27,5 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'favorite_books',
     }
   );
-  Books.associate = (models) => {};
   return Books;
 };
