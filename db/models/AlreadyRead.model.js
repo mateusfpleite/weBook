@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   AlreadyRead.associate = (models) => {
-    AlreadyRead.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-    AlreadyRead.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+    AlreadyRead.belongsToMany(models.User, { foreignKey: 'userId', as: 'user' });
+    AlreadyRead.belongsToMany(models.Books, { foreignKey: 'bookId', as: 'books' });
   };
   return AlreadyRead;
 };
