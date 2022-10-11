@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const FavoriteBooks = sequelize.define(
-    'FavoriteBooks',
+  const WantToRead = sequelize.define(
+    'WantToRead',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       underscored: true,
-      tableName: 'favorite_books',
+      tableName: 'want_to_read',
     }
   );
-  FavoriteBooks.associate = (models) => {
-    FavoriteBooks.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
-    FavoriteBooks.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+  WantToRead.associate = (models) => {
+    WantToRead.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+    WantToRead.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
   };
-  return FavoriteBooks;
+  return WantToRead;
 };
