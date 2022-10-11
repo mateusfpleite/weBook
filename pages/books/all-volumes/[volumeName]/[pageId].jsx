@@ -93,9 +93,10 @@ function AllVolumes({ data, pageId }) {
       <Link href={`/books/all-volumes/${volumeName}/${Number(pageId) + 1}`}>
         <button type="button">Next page</button>
       </Link>
-      <Link href={`/books/all-volumes/${volumeName}/${Number(pageId) - 1}`}>
+    {  pageId > 1 
+    && <Link href={`/books/all-volumes/${volumeName}/${Number(pageId) - 1}`}>
         <button type="button">Previous page</button>
-      </Link>
+      </Link>}
     </>
   );
 }
