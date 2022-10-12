@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
 function BookCard({ id, thumbnail, title, author, bestSeller}) {
+  const route = bestSeller ? `/books/isbn:${id}` : `/books/${id}`;
   return (
-    <Link href={`/books/${id}`}> 
+    <Link href={route} passHref={true}> 
     <a>
       <figure>
         <img
@@ -18,7 +19,7 @@ function BookCard({ id, thumbnail, title, author, bestSeller}) {
         )}`}
        </figcaption>
         : <figcaption>
-          {`${volumeInfo.title} - ${volumeInfo.author}`}
+          {`${title} - ${author}`}
         </figcaption>
         }
       </figure>
