@@ -88,7 +88,8 @@ function AllVolumes({ data, pageId }) {
                 id={book.id}
                 thumbnail={book.volumeInfo?.imageLinks?.thumbnail}
                 title={book.volumeInfo.title}
-                author={book.volumeInfo.authors} />
+                author={book.volumeInfo.authors}
+                bestSeller={false} />
               </div>
             )
           }
