@@ -84,7 +84,11 @@ function AllVolumes({ data, pageId }) {
             bookKey += 2;
             return (
               <div key={bookKey}>
-                <BookCard book={book} />
+                <BookCard 
+                id={book.id}
+                thumbnail={book.volumeInfo?.imageLinks?.thumbnail}
+                title={book.volumeInfo.title}
+                author={book.volumeInfo.authors} />
               </div>
             )
           }
