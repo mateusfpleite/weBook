@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import BookCard from '../../../../components/BookCard/BookCard';
 import searchBarFetch from '../../../../utils/searchBarFetch';
 
-let categoryKey = -1250;
-let authorKey = 1250;
-let bookKey = 450000;
+let categoryKey = -1;
+let authorKey = 1;
+let bookKey = 2;
 
 function AllVolumes({ data, pageId }) {
   const router = useRouter();
@@ -47,7 +48,7 @@ function AllVolumes({ data, pageId }) {
             </h4>
             {showFiltersList.category &&
               categories.map((category) => {
-                categoryKey += 1;
+                categoryKey -= 1;
                 return (
                   <li
                     key={categoryKey}
@@ -65,7 +66,7 @@ function AllVolumes({ data, pageId }) {
             </h4>
             {showFiltersList.authors &&
               authors.map((author) => {
-                authorKey += 1;
+                authorKey += 2;
                 return (
                   <li
                     key={authorKey}
@@ -80,7 +81,7 @@ function AllVolumes({ data, pageId }) {
         </div>
         <div>
           {books.map((book) => {
-            bookKey += 4;
+            bookKey += 2;
             return (
               <div key={bookKey}>
                 <BookCard book={book} />
@@ -110,7 +111,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { volumeName, pageId } = context.params;
-  const indexDecider = pageId === '1' ? 0 : ((19 * pageId) - 19) + 1;
+  const indexDecider = pageId === '1' ? 0 : ((19 * pageId) - 19) + (pageId - 1);
   const data = await searchBarFetch({ value: volumeName, startIndex: indexDecider });
   return {
     props: {
