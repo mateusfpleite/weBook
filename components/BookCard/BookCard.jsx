@@ -14,11 +14,11 @@ function BookCard({ id, thumbnail, title, author, bestSeller}) {
           alt={'book-cover'}
         />
        {!bestSeller ? 
-       <figcaption>{`${title} - ${author.join(
+       <figcaption>{`${title} - ${author?.join(
           ', '
         )}`}
        </figcaption>
-        : <figcaption>
+        : <figcaption >
           {`${title} - ${author}`}
         </figcaption>
         }
