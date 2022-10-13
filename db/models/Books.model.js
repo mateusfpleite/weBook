@@ -2,12 +2,8 @@ module.exports = (sequelize, DataTypes) => {
   const Books = sequelize.define(
     'Books',
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       bookId: {
+        primaryKey: true,
         type: DataTypes.STRING,
       },
       title: {
@@ -16,15 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       bookPicture: {
         type: DataTypes.STRING,
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        foreignKey: true,
-      },
     },
     {
       timestamps: false,
-      underscored: true,
-      tableName: 'favorite_books',
+      tableName: 'books',
     }
   );
   return Books;
