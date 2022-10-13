@@ -23,9 +23,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   AlreadyRead.associate = (models) => {
-    AlreadyRead.belongsToMany(models.User, { foreignKey: 'userId', as: 'user' });
-    models.User.belongsToMany(models.AlreadyRead, { foreignKey: 'userId', as: 'user' });
-    AlreadyRead.belongsToMany(models.Books, { foreignKey: 'bookId', as: 'books' });
+    AlreadyRead.belongsToMany(models.User, {
+      foreignKey: 'userId',
+      as: 'user',
+      through: 'Users',
+    });
+    models.Users.belongsToMany(models.AlreadyRead, {
+      foreignKey: 'userId',
+      as: 'user',
+      through: 'Users',
+    });
+
+    AlreadyRead.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+    models.Books.hasMany(models.AlreadyRead, {
+      foreignKey: 'bookId',
+      as: 'books',
+    });
   };
   return AlreadyRead;
 };
