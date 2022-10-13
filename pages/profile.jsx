@@ -1,14 +1,18 @@
 import { useState } from "react";
 import useGenericState from '../hooks/useGenericState';
+import 'react-next-dates/dist/style.css';
+import { ptBR } from 'date-fns/locale';
+import { Calendar, DatePicker } from 'react-next-dates';
 
 function Profile() {
-  const [ profilePic, setProfilePic ] = useState();
-  const [ willChangePic, setWillChangePic ] = useState(false);
+  const [profilePic, setProfilePic] = useState();
+  const [willChangePic, setWillChangePic] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
   const picture = profilePic || "https://i.imgur.com/r0t9T9j.png";
 
   const INITIAL_STATE = { profileDesc: '' };
 
-  const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
+  const [genericState, setGenericState] = useGenericState(INITIAL_STATE);
 
   const { profileDesc } = genericState;
 
@@ -21,10 +25,10 @@ function Profile() {
   };
 
   const changeProfilePic = (files) => {
-      const file = files[ 0 ];
-      const profilePic = URL.createObjectURL(file);
-      setProfilePic(profilePic);
-      setWillChangePic(false);
+    const file = files[0];
+    const profilePic = URL.createObjectURL(file);
+    setProfilePic(profilePic);
+    setWillChangePic(false);
   }
 
   return (
@@ -52,6 +56,14 @@ function Profile() {
           onChange={({ target: { files } }) => changeProfilePic(files)}
         />)
       }
+      <label>
+        Birthdate
+        <DatePicker locale={ptBR} date={startDate} onChange={setStartDate} portalContainer={document.body}>
+          {({
+      inputProps
+    }) => <input {...inputProps} />}
+        </DatePicker>
+      </label>
       <fieldset>
         <textarea
           maxLength={400}
@@ -63,10 +75,10 @@ function Profile() {
           onChange={setGenericState}
         />
         <p
-        style={ { color: textAreaLengthColor(profileDesc), transition: '1s' } }
+          style={{ color: textAreaLengthColor(profileDesc), transition: '1s' }}
         >
           {`${profileDesc.length}/400`}
-          </p>
+        </p>
       </fieldset>
     </form>
   );
