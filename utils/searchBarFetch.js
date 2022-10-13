@@ -8,7 +8,7 @@ const searchBarFetch = async (
   const withAuthor = author ? `+inauthor:'${author}'` : '';
   const withIndex = startIndex ? `&startIndex=${startIndex}` : '';
   const URL = `https://www.googleapis.com/books/v1/volumes?q=${value}${withIndex}${withAuthor}${withCat}${hasMaxResults}${lang}`;
-  console.log(URL);
+  // console.log(URL);
   const {
     data: { items },
   } = await axios.get(URL);
