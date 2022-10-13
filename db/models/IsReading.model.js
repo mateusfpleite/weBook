@@ -23,8 +23,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   IsReading.associate = (models) => {
-    IsReading.belongsToMany(models.User, { foreignKey: 'userId', as: 'user' });
-    IsReading.belongsToMany(models.Books, { foreignKey: 'bookId', as: 'books' });
+    IsReading.belongsToMany(models.User, {
+      foreignKey: 'userId',
+      as: 'user',
+      through: 'Users',
+    });
+    models.Users.belongsToMany(models.IsReading, {
+      foreignKey: 'userId',
+      as: 'user',
+      through: 'Users',
+    });
+
+    IsReading.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+    models.Books.hasMany(models.IsReading, {
+      foreignKey: 'bookId',
+      as: 'books',
+    });
   };
   return IsReading;
 };
