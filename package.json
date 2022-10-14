@@ -10,7 +10,10 @@
     "db:restart": "npx sequelize db:seed:undo:all && npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@material-ui/core": "^4.12.4",
+    "@mui/material": "^5.10.9",
     "@supabase/supabase-js": "^2.0.0",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
