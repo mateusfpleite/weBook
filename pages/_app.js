@@ -2,7 +2,9 @@ import ContextProvider from '../context/ContextProvider';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../styles/Theme';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -23,10 +25,12 @@ export default function MyApp(props) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <CssBaseline />
-      <ContextProvider>
-        <Component {...pageProps} />
-      </ContextProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ContextProvider>
+          <Component {...pageProps} />
+        </ContextProvider>
+      </ThemeProvider>
     </React.Fragment>
   );
 }
