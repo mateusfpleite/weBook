@@ -3,18 +3,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('is_reading', {
-      id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       bookId: {
         field: 'book_id',
         type: Sequelize.STRING,
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+        allowNull: false,
+        primaryKey: true,
         references: {
           model: 'books',
           key: 'book_id'
@@ -26,6 +22,8 @@ module.exports = {
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+        allowNull: false,
+        primaryKey: true,
         references: {
           model: 'users',
           key: 'id'

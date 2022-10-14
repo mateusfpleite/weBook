@@ -2,18 +2,15 @@ module.exports = (sequelize, DataTypes) => {
   const FavoriteBooks = sequelize.define(
     'FavoriteBooks',
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       bookId: {
         type: DataTypes.STRING,
         foreignKey: true,
+        primaryKey: true,
       },
       userId: {
         type: DataTypes.INTEGER,
         foreignKey: true,
+        primaryKey: true,
       },
     },
     {
