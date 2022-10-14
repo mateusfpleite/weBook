@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import BookCard from '../../components/BookCard/BookCard';
 import FacebookLogin from 'react-facebook-login';
 import BookCard from '../../components/BookCard/BookCard';
 import Header from '../../components/Header';
@@ -36,7 +35,6 @@ function Home({ fictionBooks, nonFictionBooks }) {
   itemClass="carousel-item-padding-40-px">
       {fictionBooks.map((book) => (
         <div key={book.primary_isbn10} style={{ maxWidth: '100%', height: '250px' }}>
-      {/* <div style={{display: 'flex', flexFlow: 'row wrap'}}> */}
         <BookCard
         id={book.primary_isbn10}
         thumbnail={book.book_image}
@@ -46,7 +44,7 @@ function Home({ fictionBooks, nonFictionBooks }) {
         </div>
       ) )}
       </Carousel>
-      <h2> Month Bestsellers - Non-Fiction</h2>
+      <h2> Month Bestsellers - Nonfiction</h2>
       <Carousel 
       showDots={true}
       responsive={responsive}
@@ -66,7 +64,6 @@ function Home({ fictionBooks, nonFictionBooks }) {
         </div>
       ) )}
       </Carousel>
-      {/* </div> */}
       {/* <FacebookLogin
     appId="1250954195759976"
     autoLoad={true}
@@ -80,8 +77,8 @@ function Home({ fictionBooks, nonFictionBooks }) {
 export default Home;
 
 export async function getStaticProps() {
-  const fictionURL = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=Rgr3HfLslGy1GfH6kyKNNIuqrAO5G0Ij';
-  const nonFictionURL = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=Rgr3HfLslGy1GfH6kyKNNIuqrAO5G0Ij'
+  const fictionURL = `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${process.env.NYTAPI_KEY}`;
+  const nonFictionURL = `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=${process.env.NYTAPI_KEY}`;
   const {data: {results: {books: fictionBooks }}} = await axios.get(fictionURL);
   const {data: {results: {books: nonFictionBooks }}} = await axios.get(nonFictionURL);
 
