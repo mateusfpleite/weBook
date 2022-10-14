@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import context from "../../context/context";
+import { CustomButton } from "../../styles/LoginForm";
 
 function SignInButton() {
   const { genericState } = useContext(context);
@@ -10,13 +11,18 @@ function SignInButton() {
     return !(emailRegex.test(email)) || !(passwordRegex.test(password));
   };
   return (
-    <button
+    <CustomButton
+      fullWidth
+      disabled={
+        verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)
+      }
       type="submit"
-      disabled={verifyEmailAndPassword(genericState.emailInput, genericState.passwordInput)}
+      variant="contained"
     >
       Sign In
-    </button>
+    </CustomButton>
   )
 }
+
 
 export default SignInButton;
