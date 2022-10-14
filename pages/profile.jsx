@@ -58,7 +58,7 @@ function Profile() {
       }
       <label>
         Birthdate
-        <DatePicker locale={ptBR} date={startDate} onChange={setStartDate} portalContainer={document.body}>
+        <DatePicker locale={ptBR} date={startDate} onChange={setStartDate}>
           {({
       inputProps
     }) => <input {...inputProps} />}
