@@ -7,7 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function LoginInputs() {
-  const { genericState, setGenericState } = useContext(context);
+  const { genericState, setGenericState, hasWrongPass, setHasWrongPass } = useContext(context);
   const [ showPassword, setShowPassword ] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   return (
@@ -22,7 +22,7 @@ function LoginInputs() {
         onChange={setGenericState}
         value={genericState.emailInput}
         error={verifyEmail(genericState.emailInput)}
-        helperText={verifyEmail(genericState.emailInput) ? 'Please, type a valid email' : ''}
+        helperText={verifyEmail(genericState.emailInput) && 'Please, type a valid email'}
       />
       <TextField
         id="outlined-basic"
@@ -32,7 +32,10 @@ function LoginInputs() {
         name="passwordInput"
         type={showPassword ? "text" : "password"}
         onChange={setGenericState}
+        onKeyDown={ () => setHasWrongPass(false) }
         value={genericState.passwordInput}
+        error={hasWrongPass}
+        helperText={hasWrongPass && 'Invalid password'}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
