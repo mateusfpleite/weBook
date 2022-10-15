@@ -11,19 +11,17 @@ import Link from '@mui/material/Link';
 function SignIn() {
   const router = useRouter();
 
-  const { genericState } = useContext(context);
+  const { genericState, setHasWrongPass } = useContext(context);
   const [ isRegistered, setIsRegistered ] = useState(true)
-
   const onSubmitClick = async (e) => {
     e.preventDefault()
     const { data: user } = await supabase
       .from('users')
       .select("*")
       .eq('email', genericState.emailInput)
-    if (!user[ 0 ]) {
-      return setIsRegistered(false);
-    }
-    router.push('/home')
+    if (!user[ 0 ]) return setIsRegistered(false);
+    if(user[0].password !== genericState.passwordInput) return setHasWrongPass(true);
+    router.push('/')
   };
 
   return (
@@ -31,8 +29,10 @@ function SignIn() {
       <CustomPaper>
         <CustomStack spacing={2.5}>
           <h1>weBook</h1>
+
           <LoginInputs />
           <SignInButton />
+
           {!isRegistered && (
             <>
               <CustomParagraph>It seems you are not registered, you can
@@ -41,6 +41,7 @@ function SignIn() {
               </CustomParagraph>
             </>
           )}
+
         </CustomStack>
       </CustomPaper>
     </CustomForm>
