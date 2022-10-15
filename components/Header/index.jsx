@@ -1,15 +1,19 @@
-import Link from "next/link";
 import SearchBar from '../SearchBar/SearchBar'
+import Link from '@mui/material/Link';
+import { useRouter } from 'next/router';
 
-const Header = () => {
+function Header() {
+    const router = useRouter()
     return (
         <>
-            <Link href="/profile">
-                <a><span> Profile </span></a>
-            </Link>
-            <Link href="/my-books">
-            <a><span> My Books </span></a>
-            </Link>
+            <Link onClick={() => router.push('/signIn')}>Sign In?</Link>
+            <br />
+            <Link onClick={() => router.push('/signUp')}>sign up</Link>
+            <br />
+            <Link onClick={() => router.push('/profile')}>Profile</Link>
+            <br />
+            <Link onClick={() => router.push('my-books')}>My Books</Link>
+            <br />
             <SearchBar />
         </>
     )
