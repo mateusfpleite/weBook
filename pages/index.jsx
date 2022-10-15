@@ -1,40 +1,31 @@
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import context from '../context/context';
-import SignInButton from '../components/Login/SignInButton';
-import PasswordInput from '../components/Login/PasswordInput';
+import axios from 'axios';
+import Header from '../components/Header';
+import 'react-multi-carousel/lib/styles.css';
+import AllBookCarousel from '../components/BookCard/AllBookCarousels';
 
-function SignIn() {
-  const router = useRouter();
-
-  const { genericState, setGenericState } = useContext(context);
-
-  const onSubmitClick = (e) => {
-    e.preventDefault()
-    router.push('/home')
-  }
+function Home({ fictionBooks, nonFictionBooks }) {
 
   return (
-    <form onSubmit={onSubmitClick}>
-      Wellcome to our library!
-      <br />
-      <br />
-      <label htmlFor="emailInput">
-        Email:
-        <input
-          name="emailInput"
-          id="emailInput"
-          type="text"
-          onChange={setGenericState}
-          value={genericState.emailInput}
-        />
-      </label>
-      <PasswordInput />
-      <SignInButton />
-        {/* button for going to signup page */}
-        <button type='button' onClick={ () => router.push('/signup') }>Sign up</button>
-    </form>
+    <>
+      <h1>You are in the home page!</h1>
+      <Header />
+      <AllBookCarousel fictionBooks={fictionBooks} nonFictionBooks={nonFictionBooks}/>
+    </>
   )
 }
 
-export default SignIn;
+export default Home;
+
+export async function getStaticProps() {
+  const fictionURL = `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${process.env.NYTAPI_KEY}`;
+  const nonFictionURL = `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=${process.env.NYTAPI_KEY}`;
+  const { data: { results: { books: fictionBooks } } } = await axios.get(fictionURL);
+  const { data: { results: { books: nonFictionBooks } } } = await axios.get(nonFictionURL);
+
+  return {
+    props: {
+      fictionBooks,
+      nonFictionBooks
+    }
+  }
+}
