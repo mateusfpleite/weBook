@@ -1,10 +1,12 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config({ path: '.env.local' });
+dotenv.config();
 module.exports = {
   "development": {
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "host": process.env.HOST,
+    "username": process.env.NEXT_PUBLIC_DB_USER,
+    "password": process.env.NEXT_PUBLIC_DB_PASSWORD,
+    "database": process.env.NEXT_PUBLIC_DB_NAME,
+    "host": process.env.NEXT_PUBLIC_HOST,
     "dialect": "postgres"
   },
   "test": {
@@ -15,10 +17,10 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "host": process.env.HOST,
+    "username": process.env.NEXT_PUBLIC_DB_USER,
+    "password": process.env.NEXT_PUBLIC_DB_PASSWORD,
+    "database": process.env.NEXT_PUBLIC_DB_NAME,
+    "host": process.env.NEXT_PUBLIC_HOST,
     "dialect": "postgres"
   }
 }
