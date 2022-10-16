@@ -10,7 +10,6 @@ import supabase from '../utils/supabaseClient';
 import createJWT from '../utils/createJWT';
 
 function SignIn() {
-  const router = useRouter();
   const { genericState, setHasWrongPass } = useContext(context);
   const [ isRegistered, setIsRegistered ] = useState(true)
   const onSubmitClick = async (e) => {
