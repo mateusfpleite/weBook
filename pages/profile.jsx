@@ -1,31 +1,32 @@
 import { useState } from "react";
 import useGenericState from '../hooks/useGenericState';
+import TextField from '@mui/material/TextField';
 import 'react-next-dates/dist/style.css';
-import { ptBR } from 'date-fns/locale';
-import { Calendar, DatePicker } from 'react-next-dates';
+// import { ptBR } from 'date-fns/locale';
+// import { DatePicker } from 'react-next-dates';
 
 function Profile() {
-  const [profilePic, setProfilePic] = useState();
-  const [willChangePic, setWillChangePic] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [ profilePic, setProfilePic ] = useState();
+  const [ willChangePic, setWillChangePic ] = useState(false);
+  // const [ startDate, setStartDate ] = useState(new Date());
   const picture = profilePic || "https://i.imgur.com/r0t9T9j.png";
 
   const INITIAL_STATE = { profileDesc: '' };
 
-  const [genericState, setGenericState] = useGenericState(INITIAL_STATE);
+  const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
 
   const { profileDesc } = genericState;
 
   const textAreaLengthColor = (desc) => {
-    if (desc.length < 50) return 'yellowgreen';
-    if (desc.length >= 50 && desc.length < 100) return 'green';
-    if (desc.length >= 100 && desc.length < 200) return 'orange';
-    if (desc.length >= 200 && desc.length < 300) return 'darkred';
+    if (desc.length < 32) return 'green';
+    if (desc.length >= 32 && desc.length < 64) return 'darkgreen';
+    if (desc.length >= 64 && desc.length < 96) return 'orange';
+    if (desc.length >= 96 && desc.length < 128) return 'darkred';
     return 'red';
   };
 
   const changeProfilePic = (files) => {
-    const file = files[0];
+    const file = files[ 0 ];
     const profilePic = URL.createObjectURL(file);
     setProfilePic(profilePic);
     setWillChangePic(false);
@@ -56,31 +57,29 @@ function Profile() {
           onChange={({ target: { files } }) => changeProfilePic(files)}
         />)
       }
-      <label>
+      {/* <label>
         Birthdate
         <DatePicker locale={ptBR} date={startDate} onChange={setStartDate}>
           {({
       inputProps
     }) => <input {...inputProps} />}
-        </DatePicker>
-      </label>
-      <fieldset>
-        <textarea
-          maxLength={400}
-          name="profileDesc"
-          id=""
-          style={{ resize: 'none', width: '400px', height: '180px', borderRadius: '30px', padding: '14px' }}
-          cols="0"
-          value={profileDesc}
-          onChange={setGenericState}
-        />
-        <p
-          style={{ color: textAreaLengthColor(profileDesc), transition: '1s' }}
-        >
-          {`${profileDesc.length}/400`}
-        </p>
-      </fieldset>
-    </form>
+        </DatePicker> */}
+      {/* </label> */}
+      <TextField
+        name="profileDesc"
+        multiline
+        inputProps={{ maxLength: 160 }}
+        helperText={`${profileDesc.length}/160`}
+        value={profileDesc}
+        onChange={setGenericState}
+      />
+
+      <p
+        style={{ color: textAreaLengthColor(profileDesc), transition: '1s' }}
+      >
+
+      </p>
+    </form >
   );
 }
 
