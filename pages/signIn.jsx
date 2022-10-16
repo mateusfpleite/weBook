@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import context from '../context/context';
 import SignInButton from '../components/Login/SignInButton';
