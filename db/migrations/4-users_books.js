@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('favorite_books', {
+    await queryInterface.createTable('users_books', {
       bookId: {
         field: 'book_id',
         type: Sequelize.STRING,
@@ -29,10 +29,18 @@ module.exports = {
           key: 'id'
         }
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      favorite: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      }
     });
   },
 
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable('favorite_books');
+    await queryInterface.dropTable('users_books');
   },
 };

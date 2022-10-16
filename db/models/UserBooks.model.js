@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const IsReading = sequelize.define(
-    'IsReading',
+  const UserBooks = sequelize.define(
+    'UserBooks',
     {
       bookId: {
         type: DataTypes.STRING,
@@ -12,30 +12,38 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: true,
         primaryKey: true,
       },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      favorite: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      }
     },
     {
       timestamps: false,
       underscored: true,
-      tableName: 'is_reading',
+      tableName: 'users_books',
     }
   );
-  IsReading.associate = (models) => {
-    IsReading.belongsToMany(models.User, {
+  UserBooks.associate = (models) => {
+    UserBooks.belongsToMany(models.User, {
       foreignKey: 'userId',
       as: 'user',
       through: 'Users',
     });
-    models.Users.belongsToMany(models.IsReading, {
+    models.Users.belongsToMany(models.UserBooks, {
       foreignKey: 'userId',
       as: 'user',
       through: 'Users',
     });
 
-    IsReading.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
-    models.Books.hasMany(models.IsReading, {
+    UserBooks.belongsTo(models.Books, { foreignKey: 'bookId', as: 'books' });
+    models.Books.hasMany(models.UserBooks, {
       foreignKey: 'bookId',
       as: 'books',
     });
   };
-  return IsReading;
+  return UserBooks;
 };
