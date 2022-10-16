@@ -36,7 +36,7 @@ function SignIn() {
           {!isRegistered && (
             <>
               <CustomParagraph>It seems you are not registered, you can
-                <Link onClick={() => router.push('/signUp')}> sign up </Link>
+                <Link href='/signUp'> sign up </Link>
                 right now! It will only take a few minutes :)
               </CustomParagraph>
             </>
