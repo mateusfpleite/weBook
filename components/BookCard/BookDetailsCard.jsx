@@ -15,6 +15,19 @@ function BookDetailsCard({ book }) {
   const didMount = useRef(false);
 
   useEffect(() => {
+    async function recoverShelves() {
+      const loggedUser = Number(JSON.parse(localStorage.getItem('loggedUser'))) || 0;
+      const { data } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: loggedUser });
+      if (data.length) {
+        setFavorite(data[0].favorite)
+        const shelf = data[0].status;
+        setShelves({...shelves, [shelf]: true})
+      }
+    }
+    recoverShelves();
+  }, [])
+
+  useEffect(() => {
     async function updateShelves() {
       const loggedUser = Number(JSON.parse(localStorage.getItem('loggedUser'))) || 0;
       const { data } = await supabase.from('books').select('*').eq('book_id', book.id);
