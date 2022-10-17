@@ -31,7 +31,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       favorite: {
         type: Sequelize.BOOLEAN,
