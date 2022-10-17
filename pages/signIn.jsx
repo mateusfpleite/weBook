@@ -7,20 +7,24 @@ import LoginInputs from '../components/Login/LoginInputs';
 import Link from '@mui/material/Link';
 import supabase from '../utils/supabaseClient';
 import createJWT from '../utils/createJWT';
+import { useRouter } from 'next/router';
 
 function SignIn() {
   const { genericState, setHasWrongPass } = useContext(context);
   const [ isRegistered, setIsRegistered ] = useState(true)
+  const router = useRouter();
   const onSubmitClick = async (e) => {
     e.preventDefault()
     const { data: user } = await supabase
       .from('users')
       .select("*")
       .eq('email', genericState.emailInput)
+      console.log(user);
     if (!user[ 0 ]) return setIsRegistered(false);
     if (user[ 0 ].password !== genericState.passwordInput) return setHasWrongPass(true);
     const jwt = createJWT(user[ 0 ].id)
     localStorage.setItem('loggedUser', JSON.stringify(jwt));
+    router.push('/');
   };
 
   return (
