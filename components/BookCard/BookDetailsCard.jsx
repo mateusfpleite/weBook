@@ -2,7 +2,9 @@ import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import isoConv from 'iso-language-converter';
 import { useEffect, useRef, useState } from 'react';
 import supabase from '../../utils/supabaseClient';
-import { Collapse } from '@mui/material';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 function BookDetailsCard({ book }) {
   const [shelves, setShelves] = useState({
@@ -14,24 +16,28 @@ function BookDetailsCard({ book }) {
   const [isFavorite, setFavorite] = useState(false);
   const didMount = useRef(false);
 
+
   useEffect(() => {
     async function recoverShelves() {
-      const loggedUser = Number(JSON.parse(localStorage.getItem('loggedUser'))) || 0;
-      const { data } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: loggedUser });
+      const token = JSON.parse(localStorage.getItem('loggedUser'));
+      const {data: {id}} = jwt.verify(token, JWT_SECRET);
+      const { data } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: id });
       if (data.length) {
         setFavorite(data[0].favorite)
         const shelf = data[0].status;
         setShelves({ ...shelves, [shelf]: true })
       }
+      didMount.current = true;
     }
     recoverShelves();
   }, [])
 
   useEffect(() => {
     async function updateShelves() {
-      const loggedUser = Number(JSON.parse(localStorage.getItem('loggedUser'))) || 0;
+      const token = JSON.parse(localStorage.getItem('loggedUser'));
+      const {data: {id}} = jwt.verify(token, JWT_SECRET);
       const { data } = await supabase.from('books').select('*').eq('book_id', book.id);
-      const { data: userBook } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: loggedUser });
+      const { data: userBook } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: id });
       if (!(data.length)) {
         await supabase
           .from('books')
@@ -44,14 +50,14 @@ function BookDetailsCard({ book }) {
           await supabase
             .from('users_books')
             .insert([
-              { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite },
+              { book_id: book.id, user_id: id, status: selectedShelf, favorite: isFavorite },
             ]);
         }
         if (userBook.length) {
           await supabase
             .from('users_books')
             .update({ status: selectedShelf, favorite: isFavorite })
-            .match({ book_id: book.id, user_id: loggedUser });
+            .match({ book_id: book.id, user_id: id });
         }
       }
       if (!selectedShelf) {
@@ -59,15 +65,14 @@ function BookDetailsCard({ book }) {
           ? await supabase
             .from('users_books')
             .update({ favorite: isFavorite })
-            .match({ book_id: book.id, user_id: loggedUser })
+            .match({ book_id: book.id, user_id: id })
           : await supabase
             .from('users_books')
             .insert([
-              { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite }]);
+              { book_id: book.id, user_id: id, status: selectedShelf, favorite: isFavorite }]);
       }
     }
     if (didMount.current) updateShelves();
-    else didMount.current = true;
   }, [selectedShelf, isFavorite])
 
   const {
