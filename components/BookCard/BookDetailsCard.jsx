@@ -21,7 +21,7 @@ function BookDetailsCard({ book }) {
       if (data.length) {
         setFavorite(data[0].favorite)
         const shelf = data[0].status;
-        setShelves({...shelves, [shelf]: true})
+        setShelves({ ...shelves, [shelf]: true })
       }
     }
     recoverShelves();
@@ -46,7 +46,8 @@ function BookDetailsCard({ book }) {
             .insert([
               { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite },
             ]);
-        } else {
+        }
+        if (userBook.length) {
           await supabase
             .from('users_books')
             .update({ status: selectedShelf, favorite: isFavorite })
