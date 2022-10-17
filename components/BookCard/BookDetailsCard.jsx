@@ -1,7 +1,8 @@
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import isoConv from 'iso-language-converter';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import supabase from '../../utils/supabaseClient';
+import { Collapse } from '@mui/material';
 
 function BookDetailsCard({ book }) {
   const [shelves, setShelves] = useState({
@@ -9,48 +10,52 @@ function BookDetailsCard({ book }) {
     reading: false,
     read: false,
   });
-const [selectedShelf, selectShelf] = useState('');
-const [isFavorite, setFavorite] = useState(false);
+  const [selectedShelf, selectShelf] = useState(null);
+  const [isFavorite, setFavorite] = useState(false);
+  const didMount = useRef(false);
+
   useEffect(() => {
-   async function updateShelves() {
+    async function updateShelves() {
       const loggedUser = Number(JSON.parse(localStorage.getItem('loggedUser'))) || 0;
       const { data } = await supabase.from('books').select('*').eq('book_id', book.id);
+      const { data: userBook } = await supabase.from('users_books').select('*').match({ book_id: book.id, user_id: loggedUser });
       if (!(data.length)) {
         await supabase
-        .from('books')
-        .insert([
-          { book_id: book.id, title, book_picture: bookImg },
-        ]);
+          .from('books')
+          .insert([
+            { book_id: book.id, title, book_picture: bookImg },
+          ]);
       }
       if (selectedShelf) {
-        const {data: check} = await supabase.from('users_books').select('*').match({book_id: book.id, user_id: loggedUser});
-        if (!(check.length)) {
+        if (!(userBook.length)) {
           await supabase
-          .from('users_books')
-          .insert([
-            { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite },
-          ]);
+            .from('users_books')
+            .insert([
+              { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite },
+            ]);
         } else {
           await supabase
-          .from('users_books')
-          .update({ status: selectedShelf, favorite: isFavorite })
-          .match({book_id: book.id, user_id: loggedUser});
+            .from('users_books')
+            .update({ status: selectedShelf, favorite: isFavorite })
+            .match({ book_id: book.id, user_id: loggedUser });
         }
-      } else {
-        await supabase
-        .from('users_books')
-        .update({favorite: isFavorite })
-        .match({book_id: book.id, user_id: loggedUser});
+      }
+      if (!selectedShelf) {
+        userBook.length
+          ? await supabase
+            .from('users_books')
+            .update({ favorite: isFavorite })
+            .match({ book_id: book.id, user_id: loggedUser })
+          : await supabase
+            .from('users_books')
+            .insert([
+              { book_id: book.id, user_id: loggedUser, status: selectedShelf, favorite: isFavorite }]);
       }
     }
-    updateShelves();
+    if (didMount.current) updateShelves();
+    else didMount.current = true;
   }, [selectedShelf, isFavorite])
 
-  useEffect (() => {
-    async function updateFavorites() {
-      
-    }
-  })
   const {
     pageCount,
     authors,
@@ -67,26 +72,18 @@ const [isFavorite, setFavorite] = useState(false);
 
   const bookImg = imageLinks?.thumbnail || 'https://tinyurl.com/36ys7v4w';
 
-  const favoriteBook = async ({ target }) => {
-    await supabase
-      .from(target.value)
-      .insert([
-        { book_id: book.id, user_id: +loggedUser },
-      ]);
-  }
-
   const handleChange = async ({ target }) => {
-      setShelves({...shelves, [target.name]: !(shelves[target.name])});
-      if (target.name === 'reading') {
-        setShelves({...shelves, wantToRead: false, read: false, reading: !(shelves.reading) });
-      }
-      if (target.name === 'wantToRead') {
-        setShelves({...shelves, reading: false, read: false, wantToRead: !(shelves.wantToRead) });
-      }
-      if (target.name === 'read') {
-        setShelves({...shelves, reading: false, wantToRead: false, read: !(shelves.read) });
-      }
-      if (target.checked) selectShelf(target.name);
+    setShelves({ ...shelves, [target.name]: !(shelves[target.name]) });
+    if (target.name === 'reading') {
+      setShelves({ ...shelves, wantToRead: false, read: false, reading: !(shelves.reading) });
+    }
+    if (target.name === 'wantToRead') {
+      setShelves({ ...shelves, reading: false, read: false, wantToRead: !(shelves.wantToRead) });
+    }
+    if (target.name === 'read') {
+      setShelves({ ...shelves, reading: false, wantToRead: false, read: !(shelves.read) });
+    }
+    if (target.checked) selectShelf(target.name);
   };
 
   return (
@@ -100,8 +97,6 @@ const [isFavorite, setFavorite] = useState(false);
         src={bookImg}
         alt="" />
       <div>
-        {description ? <p dangerouslySetInnerHTML={{ __html: description }} /> : <p>No description avaliable</p>}
-
         <FormGroup row>
           <FormControlLabel
             control={
@@ -122,7 +117,7 @@ const [isFavorite, setFavorite] = useState(false);
             }
             label="Want to Read"
           />
-            <FormControlLabel
+          <FormControlLabel
             control={
               <Switch
                 name='reading'
@@ -132,7 +127,7 @@ const [isFavorite, setFavorite] = useState(false);
             }
             label="Reading"
           />
-            <FormControlLabel
+          <FormControlLabel
             control={
               <Switch
                 name='read'
@@ -143,12 +138,13 @@ const [isFavorite, setFavorite] = useState(false);
             label="Read"
           />
         </FormGroup>
+        {description ? <p dangerouslySetInnerHTML={{ __html: description }} /> : <p>No description avaliable</p>}
         <p>Number of pages: {pageCount}</p>
         <p>Published: {publishedDate}</p>
         <p>Publisher: {publisher}</p>
+        <p><a href={previewLink} target="_blank">Google Books Preview</a></p>
+        <a href={canonicalVolumeLink} target="_blank">Buy it on Playstore!</a>
       </div>
-      <p><a href={previewLink} target="_blank">Google Books Preview</a></p>
-      <a href={canonicalVolumeLink} target="_blank">Buy it on Playstore!</a>
     </div>
   )
 }
