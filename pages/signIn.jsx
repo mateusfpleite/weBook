@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import context from '../context/context';
 import SignInButton from '../components/Login/SignInButton';
-import { CustomForm, CustomPaper, CustomParagraph, CustomStack } from '../styles/LoginForm';
+import { CustomForm, CustomPaper, CustomParagraph, CustomStack } from '../styles/Login';
 import { useState } from 'react';
 import LoginInputs from '../components/Login/LoginInputs';
 import Link from '@mui/material/Link';
