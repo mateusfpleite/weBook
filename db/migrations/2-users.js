@@ -37,8 +37,8 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: "You haven't put any description yet :("
-      }
+        defaultValue: null,
+      },
     });
   },
 
