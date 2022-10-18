@@ -3,14 +3,12 @@ import useGenericState from '../hooks/useGenericState';
 import TextField from '@mui/material/TextField';
 import 'react-next-dates/dist/style.css';
 import Button from '@mui/material/Button';
-import { CustomForm, CustomPaper } from '../styles/Login';
+import { CustomForm, CustomPaper, CustomParagraph } from '../styles/Login';
 import { useEffect } from 'react';
 import jwt from 'jsonwebtoken';
 import supabase from '../utils/supabaseClient';
-// import { ptBR } from 'date-fns/locale';
-// import { DatePicker } from 'react-next-dates';
 
-const JWT_SECRET = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const JWT_SECRET = process.env.NEXT_PUBLIC_DB_PASSWORD;
 
 function Profile() {
   const [ profilePic, setProfilePic ] = useState();
@@ -25,14 +23,6 @@ function Profile() {
   const [ genericState, setGenericState ] = useGenericState(INITIAL_STATE);
 
   const { profileDesc } = genericState;
-
-  const textAreaLengthColor = (desc) => {
-    if (desc.length < 32) return 'green';
-    if (desc.length >= 32 && desc.length < 64) return 'darkgreen';
-    if (desc.length >= 64 && desc.length < 96) return 'orange';
-    if (desc.length >= 96 && desc.length < 128) return 'darkred';
-    return 'red';
-  };
 
   const changeProfilePic = (files) => {
     const file = files[ 0 ];
@@ -49,7 +39,8 @@ function Profile() {
         .from('users')
         .select('*')
         .eq('id', id);
-      setUserProfileInfos(data[0])
+      setUserProfileInfos(data[ 0 ])
+      console.log(data)
     }
     fetchUserInfos();
   }, [])
@@ -59,14 +50,20 @@ function Profile() {
     <CustomForm method='POST'>
       <CustomPaper>
         <img
-          src={picture}
+          src={userProfileInfos.profile_picture || picture}
           alt=''
           style={{ width: '80px', borderRadius: '100%', border: '1px solid black' }}
         />
-        <br />
 
+        <CustomParagraph>
+          {`${userProfileInfos.first_name} ${userProfileInfos.last_name}`}
+        </CustomParagraph>
+
+        <CustomParagraph>
+          {userProfileInfos.email}
+        </CustomParagraph>
         {editProfile &&
-          <span>
+          <>
             {!willChangePic ?
               (
                 <button
@@ -83,7 +80,7 @@ function Profile() {
                 />
               )
             }
-          </span>
+          </>
         }
 
         {editProfile &&
@@ -104,11 +101,6 @@ function Profile() {
           value={profileDesc}
           onChange={setGenericState}
         />
-        {/* 
-      <p
-        style={{ color: textAreaLengthColor(profileDesc), transition: '1s' }}
-        >
-      </p> */}
 
         <Button
           onClick={() => setEditProfile(true)}
@@ -116,7 +108,7 @@ function Profile() {
           type='button'
           variant='contained'
         >
-          Edit profile
+          { !editProfile ? 'Edit profile' : 'Save' }
         </Button>
       </CustomPaper>
     </CustomForm >
