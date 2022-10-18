@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import context from "../../context/context";
-import { CustomButton } from "../../styles/LoginForm";
+import { CustomButton } from "../../styles/Login";
 
 function SignInButton() {
   const { genericState } = useContext(context);
