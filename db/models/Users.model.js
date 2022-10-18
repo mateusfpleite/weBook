@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       profilePicture: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
     {
       timestamps: false,
@@ -17,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.hasOne(models.Staff,
-      { foreignKey: 'userId', as: 'staff' });
-  }
+    User.hasOne(models.Staff, { foreignKey: 'userId', as: 'staff' });
+  };
   return User;
 };

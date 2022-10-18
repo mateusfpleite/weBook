@@ -34,6 +34,11 @@ module.exports = {
         allowNull: true,
         defaultValue: null,
       },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "You haven't put any description yet :("
+      }
     });
   },
 
