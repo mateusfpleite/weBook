@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const JWT_SECRET = process.env.NEXT_PUBLIC_DB_PASSWORD;
 
 const createJWT = (id) => {
   const jwtConfig = { algorithm: 'HS256' };
