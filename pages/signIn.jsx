@@ -10,19 +10,23 @@ import createJWT from '../utils/createJWT';
 import { useRouter } from 'next/router';
 
 function SignIn() {
-  const { genericState, setHasWrongPass } = useContext(context);
-  const [ isRegistered, setIsRegistered ] = useState(true)
+  const {
+    genericState,
+    setHasWrongPass,
+    setProfileId
+  } = useContext(context);
+  const [ isRegistered, setIsRegistered ] = useState(true);
   const router = useRouter();
   const onSubmitClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const { data: user } = await supabase
       .from('users')
       .select("*")
-      .eq('email', genericState.emailInput)
-      console.log(user);
+      .eq('email', genericState.emailInput);
     if (!user[ 0 ]) return setIsRegistered(false);
     if (user[ 0 ].password !== genericState.passwordInput) return setHasWrongPass(true);
-    const jwt = createJWT(user[ 0 ].id)
+    setProfileId(user[0].id)
+    const jwt = createJWT(user[ 0 ].id);
     localStorage.setItem('loggedUser', JSON.stringify(jwt));
     router.push('/');
   };
